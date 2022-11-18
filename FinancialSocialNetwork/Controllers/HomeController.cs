@@ -15,6 +15,7 @@ namespace FinancialSocialNetwork.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.isLoggedIn = false;
             return View();
         }
 
