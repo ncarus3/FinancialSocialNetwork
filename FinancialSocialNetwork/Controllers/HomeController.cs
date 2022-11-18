@@ -19,8 +19,24 @@ namespace FinancialSocialNetwork.Controllers
             return View();
         }
 
+        public IActionResult About()
+        {
+            ViewBag.isLoggedIn = false;
+
+            return View();
+        }
+
+        public IActionResult GoPro()
+        {
+            ViewBag.isLoggedIn = false;
+
+            return View();
+        }
+
         public IActionResult Privacy()
         {
+            ViewBag.isLoggedIn = false;
+
             return View();
         }
 
