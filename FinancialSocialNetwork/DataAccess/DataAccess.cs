@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Runtime.ConstrainedExecution;
 
@@ -25,10 +26,12 @@ namespace FinancialSocialNetwork.DataAccess
         }
 
 
-        public List<String> getUsers()
+        public List<Models.UserModel> getUsers()
         {
             connection();
             SqlCommand command = new SqlCommand("SELECT * FROM Users", con);
+            List<Models.UserModel> users = new List<Models.UserModel>();
+
             try
             {
                 con.Open();
@@ -41,8 +44,17 @@ namespace FinancialSocialNetwork.DataAccess
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 //create a model for users
-                while (reader.Read())
-                {
+                while (reader.Read()) {
+                    Models.UserModel user = new Models.UserModel();
+
+                    user.userID = Int32.Parse(reader["UserID"].ToString());
+                    user.email = reader["Email"].ToString();
+                    user.phoneNumber = (reader["PhoneNumber"].ToString());
+                    user.firstName = reader["FirstName"].ToString();
+                    user.lastName = reader["LastName"].ToString();
+                    user.country = reader["Country"].ToString();
+                    user.username = reader["Username"].ToString();
+
                     //users.name = reader["name"].ToString();
                 }
             }

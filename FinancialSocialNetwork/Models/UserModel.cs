@@ -7,5 +7,9 @@
         public String username { get; set; }
         public int userID { get; set; }
         public String email { get; set; }
+
+        public String country { get; set; }
+
+        public String phoneNumber { get; set; }
     }
 }

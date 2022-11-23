@@ -7,6 +7,33 @@ html {
     font-size: 16px;
   }
 }
+#buttonStyle {
+    font-size: 15px;
+    font-family: Arial;
+    width: 140px;
+    height: 50px;
+    border-width: 1px;
+    color: #fff;
+    border-color: #84bbf3;
+    font-weight: bold;
+    margin: 1em;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    box-shadow: inset 0px 1px 0px 0px #bbdaf7;
+    text-shadow: inset 0px 1px 0px #528ecc;
+    background: linear-gradient(#79bbff, #378de5);
+}
+
+    #buttonStyle:hover {
+        background: linear-gradient(#378de5, #79bbff);
+    }
+.content{
+    text-align: center;
+    margin: auto;
+   
+}
 
 html {
   position: relative;

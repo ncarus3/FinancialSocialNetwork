@@ -16,7 +16,12 @@ namespace FinancialSocialNetwork.Controllers
 
         public IActionResult Index()
         {
-            DA.getUsers();
+            ViewBag.isLoggedIn = false;
+            return View();
+        }
+
+        public IActionResult RegisterLogin()
+        {
             ViewBag.isLoggedIn = false;
             return View();
         }
