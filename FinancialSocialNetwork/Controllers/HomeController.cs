@@ -20,6 +20,17 @@ namespace FinancialSocialNetwork.Controllers
             return View();
         }
 
+        public IActionResult CurrentCurrency()
+        {
+            ViewBag.isLoggedIn = false;
+            return View();
+        }
+
+        public IActionResult FindMatches()
+        {
+            ViewBag.isLoggedIn = false;
+            return View();
+        }
         public IActionResult RegisterLogin()
         {
             ViewBag.isLoggedIn = false;
