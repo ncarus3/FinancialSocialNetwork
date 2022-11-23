@@ -29,7 +29,8 @@ html {
     #buttonStyle:hover {
         background: linear-gradient(#378de5, #79bbff);
     }
-.content{
+#container{
+    display:block;
     text-align: center;
     margin: auto;
    
