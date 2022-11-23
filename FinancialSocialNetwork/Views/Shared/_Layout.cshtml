@@ -48,6 +48,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link-li" asp-area="" asp-controller="Home" asp-action="Index">Go Pro</a>
                                 </li>
+                                <li class="nav-item RL">
+                                    <a class="nav-link-li" asp-area="" asp-controller="Account" asp-action="MyAccount">My Account</a>
+                                </li>
 
                             } else { //if the user is not logged in, these links display
 
@@ -84,12 +87,12 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted" style="">
         <div class="container">
             &copy; 2022 - FinancialSocialNetwork - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

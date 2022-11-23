@@ -1,0 +1,195 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<style>
+
+    #sides{
+        display:flex;
+        flex-direction:row;
+    }
+    .side{
+        outline: 1px solid;
+        display:flex;
+        flex-direction:column;
+        padding:1em;
+        width:50%;
+        align-items:center;
+        margin-bottom:5em;
+    }
+    div.profilePicture{
+        display:flex;
+        margin:1em;
+        flex-direction:row;
+    }
+    div.bio{
+        display:flex;
+        flex-direction:row;
+        margin:1em;
+        justify-content: flex-end;
+    }
+    div.banks{
+        display:flex;
+        flex-direction:row;
+        margin:1em;
+        justify-content: flex-end;
+    }
+    img.profilePicture{
+        width:200px;
+        height:200px;
+        margin-left:1em;
+    }
+    select.banks{
+        margin-left:1em;
+    }
+    textarea.bio{
+        height:200px;
+        padding:12px 20px;
+        box-sizing:border-box;
+        border:2px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        font-size:13px;
+        margin-left: 1em;
+        z-index:2;
+        
+    }
+
+    div#overlay{
+        background-color:black;
+        opacity:80%;
+        z-index:100;
+        height:100%;
+        width:100%;
+        position:absolute;
+        top:0;
+        left:0;
+        display:none;
+    }
+
+    div#editPicture{
+        width:400px;
+        height:300px;
+        border:white;
+        border-style: double;
+        display:none;
+        margin: 0 auto;
+        position:relative;
+        background-color:lightskyblue;
+        z-index:101;
+    }
+    div#editBio{
+        width: 400px;
+        height: 300px;
+        border: white;
+        border-style: double;
+        display: none;
+        margin: 0 auto;
+        position: relative;
+        background-color: lightskyblue;
+        z-index: 101;
+    }
+    div#editBanks{
+        width: 400px;
+        height: 300px;
+        border: white;
+        border-style: double;
+        display: none;
+        margin: 0 auto;
+        position: relative;
+        background-color: lightskyblue;
+        z-index: 101;
+    }
+    div#pictureDiv{
+       display:flex;
+    }
+    
+</style>
+
+<div id="containerDiv">
+
+
+    <h2>My Account</h2>
+    <div id="Sides">
+        <div class="side" style="float:left;">
+            <h4>Details:</h4> <br />
+            <hr />
+            <div class="profContents">
+                <div class="profilePicture">
+                    <h5>Profile Picture:</h5>
+                    <img src="" class="profilePicture" />
+                </div>
+                <div class="bio">
+                    <h5>Biography:</h5>
+                    <textarea class="bio" disabled></textarea>
+                </div>
+                <div class="banks">
+                    <h5>Banks I Have: </h5>
+                    <br />
+                    <select class="banks">
+                        <option>Td Bank</option>
+                        <option>Chase Bank</option>
+                        <option>RobinHood</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="side" style="float:right;">
+            <h4>Configuration:</h4>
+            <hr />
+            <a class="buttonStyle" id="editPicture">Edit Picture</a>
+            <a class="buttonStyle" id="editBio">Edit Bio</a>
+            <a class="buttonStyle" id="editBanks">Edit Banks</a>
+        </div>
+    </div>
+    <div id="overlay"></div>
+    <div id="editPicture">
+        <div id="pictureDiv">
+            <a class="buttonStyle" id="removePicture">Remove Picture</a>
+            <a class="buttonStyle" id="changePicture">Change Picture</a>
+            <a class="buttonStyle" id="cancelPicture">Cancel</a>
+        </div>
+        
+    </div>
+    <div id="editBio">
+        <textarea id="bioText"></textarea>
+        <a class="buttonStyle" id="updateBio">Update</a>
+        <a class="buttonStyle" id="cancelBio">Cancel</a>
+    </div>
+    <div id="editBanks">
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script >
+    $(document).ready(function(){
+        $("a#editPicture").click(function(){
+            $("div#editPicture").show();
+            $("div#overlay").show();
+
+        });
+        $("a#cancelPicture").click(function(){
+            $("div#editPicture").hide();
+            $("div#overlay").hide();
+
+
+        });
+        $("a#editBio").click(function () {
+            $("div#editBio").show();
+            $("div#overlay").show();
+
+        });
+        $("a#cancelBio").click(function () {
+            $("div#editBio").hide();
+            $("div#overlay").hide();
+
+
+        });
+        $("a#editBanks").click(function () {
+            alert("banks");
+        });
+    });
+</script>

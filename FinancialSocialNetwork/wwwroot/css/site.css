@@ -7,11 +7,11 @@ html {
     font-size: 16px;
   }
 }
-#buttonStyle {
+.buttonStyle {
     font-size: 15px;
     font-family: Arial;
-    width: 140px;
-    height: 50px;
+    width: 200px;
+    height: 1.9em;
     border-width: 1px;
     color: #fff;
     border-color: #84bbf3;
@@ -29,10 +29,10 @@ html {
     #buttonStyle:hover {
         background: linear-gradient(#378de5, #79bbff);
     }
-#container{
+#containerDiv{
     display:block;
     text-align: center;
-    margin: auto;
+    margin: 2em;
    
 }
 
