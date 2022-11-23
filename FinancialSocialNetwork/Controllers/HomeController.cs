@@ -12,9 +12,11 @@ namespace FinancialSocialNetwork.Controllers
         {
             _logger = logger;
         }
+        private DataAccess.DataAccess DA = new DataAccess.DataAccess();
 
         public IActionResult Index()
         {
+            DA.getUsers();
             ViewBag.isLoggedIn = false;
             return View();
         }
