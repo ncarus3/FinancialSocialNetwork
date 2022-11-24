@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Runtime.ConstrainedExecution;
+using System.Security.Cryptography;
 
 namespace FinancialSocialNetwork.DataAccess
 {
@@ -62,5 +63,69 @@ namespace FinancialSocialNetwork.DataAccess
                 return null;
         }
 
+
+        public Boolean login(String username, String password)
+        {
+
+            Boolean success = false;
+            connection();
+
+            String passwordHashed = getPasswordHash(password);
+
+            SqlCommand command = new SqlCommand("SELECT UserID FROM UserLogin WHERE Username='" + username + "' AND Password='" + passwordHashed + "'", con);
+            try
+            {
+                con.Open();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Failed to connect to DB:  " + e.ToString()); //not handling DB errors for this project just yet.
+            }
+            int r = command.ExecuteNonQuery();
+
+            if (r == 1)
+                success= true;
+            return success;
+
+        }
+
+        private string getPasswordHash(string password) //using base64 old method just for functionlity. NOT SECURE anymore
+        {
+            String hashedPassword = "";
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(password);
+            hashedPassword = System.Convert.ToBase64String(plainTextBytes);
+
+
+            return hashedPassword;
+        }
+
+        public String getBio(int UserID)
+        {
+            connection();
+            SqlCommand command = new SqlCommand("SELECT Bio FROM UserInfo WHERE UserID=" + UserID, con);
+            try {
+                con.Open();
+            } catch (Exception e) {
+                Console.WriteLine("Failed to connect to DB:  " + e.ToString()); //not handling DB errors for this project just yet.
+            }
+
+            String bio = "";
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+
+                    bio = reader["Bio"].ToString();
+                }
+            }
+
+            if (bio == null)
+            {
+                bio = "I don't have a bio just yet!";
+            }
+
+            return bio;
+        }
     }
 }
