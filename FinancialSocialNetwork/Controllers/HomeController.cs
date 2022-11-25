@@ -1,4 +1,5 @@
 ﻿using FinancialSocialNetwork.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,16 +7,28 @@ namespace FinancialSocialNetwork.Controllers
 {
     public class HomeController : Controller
     {
+        //Cookie isLoggedIn = new Cookie();
         private readonly ILogger<HomeController> _logger;
+
+
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+
         }
+           
+
+        
         private DataAccess.DataAccess DA = new DataAccess.DataAccess();
 
         public IActionResult Index()
         {
+            /*Boolean isLoggedIn = false;
+            Byte[] b = new Byte[1];
+            b[0] = 1;
+            HttpContext.Session.Set("d", b);*/
+
             ViewBag.isLoggedIn = false;
             return View();
         }
@@ -23,11 +36,16 @@ namespace FinancialSocialNetwork.Controllers
         public IActionResult CurrentCurrency()
         {
             ViewBag.isLoggedIn = false;
+           
             return View();
         }
 
         public IActionResult FindMatches()
         {
+            List<UserModel> UM = new List<UserModel>();
+            UM = DA.getUsers();
+            ViewBag.people = UM;
+
             ViewBag.isLoggedIn = false;
             return View();
         }
@@ -68,5 +86,6 @@ namespace FinancialSocialNetwork.Controllers
         {
             return PartialView("_MatchTemplate");
         }
+
     }
 }

@@ -1,7 +1,8 @@
 ﻿
 @{
     // var users = ViewBag.usersOBJ;
-    var tmp ="";
+    var people = ViewBag.people;
+    
 
    
 }
@@ -23,6 +24,8 @@
     .section{
         margin:.5em;
         display:flex;
+        width:20%;
+        align-items:center;
         flex-direction:column;
     }
 </style>
@@ -33,23 +36,33 @@
         
 
     }}*@
-<div id="containerDiv">
-    <div class="matchDiv">
-        <div class="section">
-            <img class="profilePicture" src="" />
-        </div>
-        <div class="section">
-            <p>Name Name</p>
-            <p>Country</p>
-        </div>
-        <div class="section">
-            <p>Banks Name Uses:</p>
-            <p>Bank 1</p>
-            <p>Bank 2</p>
-        </div>
-        <div class="section">
-            <a href="" class="buttonStyle">Match with Name</a>
-        </div>
 
-    </div>
-</div>
+@{
+    foreach (var user in people)
+    {
+       <div id="containerDiv">
+            <div class="matchDiv">
+                <div class="section">
+                    <img class="profilePicture" src="@user.photoURL" />
+                </div>
+                <div class="section">
+                    <p>@user.firstName @user.lastName</p>
+                    <p>@user.country</p>
+                </div>
+                <div class="section">
+                    <p>Bio:</p>
+                    <p>@user.bio</p>
+                </div>
+                <div class="section">
+                    <p>Banks Name Uses:</p>
+                    <p>@user.bankIDs</p>
+                    
+                </div>
+                <div class="section">
+                    <a href="/User?id=@user.userID" class="buttonStyle">Match with @user.firstName</a>
+                </div>
+
+            </div>
+    </div> 
+    }
+}

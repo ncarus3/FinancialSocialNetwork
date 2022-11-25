@@ -11,5 +11,8 @@
         public String country { get; set; }
 
         public String phoneNumber { get; set; }
+        public String photoURL { get; set; }
+        public String bio { get; set; }
+        public String bankIDs{ get; set; }
     }
 }

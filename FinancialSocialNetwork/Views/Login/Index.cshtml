@@ -3,3 +3,68 @@
 *@
 @{
 }
+
+<style>
+	.error{
+		color:red;
+		display:none;
+		position:absolute;
+	}
+
+</style>
+
+<div class="container">
+		<h3 class="my-4">Login Form</h3> 
+		<h5 class="error" id="error">Please input both the username and password.</h5>
+		<hr class="my-4" />
+		<div class="form-group mb-3 row">
+			<label for="username" class="col-md-5 col-form-label">Username</label>
+			<div class="col-md-7"><input type="text" class="form-control form-control-lg" id="username" name="username" required></div>
+		</div>
+		<div class="form-group mb-3 row">
+			<label for="password" class="col-md-5 col-form-label">Password</label>
+			<div class="col-md-7"><input type="password" class="form-control form-control-lg" id="password" name="password" required></div>
+		</div>
+		<hr class="my-4" />
+		<div class="form-group mb-3 row">
+			<div class="col-md-7">
+				<div class="form-check custom-control custom-checkbox"><input class="form-check-input custom-control-input" type="checkbox" name="check-option" id="remember" value="Remember me"><label class="form-check-label custom-control-label" for="check-option5_2">Remember me</label></div>
+			</div>
+		</div>
+		<div class="form-group mb-3 row">
+			<label for="login-up6" class="col-md-5 col-form-label"></label>
+			<div class="col-md-7"><button class="btn btn-primary btn-lg" id="loginB">Login</button></div>
+		</div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+
+
+	$("button#loginB").click(function(){
+		let username = $("input#username").val();
+		let password = $("input#password").val();
+		
+		if (username == "" || password == ""){
+			$("h5.error").text("Please input both the username and password.");
+			$("h5.error").slideDown();
+
+		} else {
+			$("h5.error").slideUp();
+			$.post("/Login/login", { username: username, password:password}, function (data) {
+				if (data != true){
+					$("h5.error").text("The inputed username or password is incorrect.");
+					$("h5.error").slideDown();
+				} else {
+					$("h5.error").slideUp();
+
+				}
+			});
+
+
+		}
+	});
+
+
+</script>

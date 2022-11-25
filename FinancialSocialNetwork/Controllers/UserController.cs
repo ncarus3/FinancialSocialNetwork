@@ -2,12 +2,10 @@
 
 namespace FinancialSocialNetwork.Controllers
 {
-    public class RegisterController : Controller
+    public class UserController : Controller
     {
-        public IActionResult Index()
+        public IActionResult User()
         {
-            ViewBag.isLoggedIn = false;
-
             return View();
         }
     }

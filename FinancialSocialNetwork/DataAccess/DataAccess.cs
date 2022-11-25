@@ -1,15 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
-using System.Runtime.ConstrainedExecution;
-using System.Security.Cryptography;
+using System.Net;
+using Microsoft.AspNetCore.Http;
+
 
 namespace FinancialSocialNetwork.DataAccess
 {
     public class DataAccess //Our file to access SQL information. Here we will have our stored procedures and functions
     {
-
-    
 
         private SqlConnection con;
 
@@ -26,11 +26,11 @@ namespace FinancialSocialNetwork.DataAccess
 
         }
 
-
         public List<Models.UserModel> getUsers()
         {
             connection();
-            SqlCommand command = new SqlCommand("SELECT * FROM Users", con);
+            SqlCommand command = new SqlCommand("dbo.GetUserData", con);
+            command.CommandType = CommandType.StoredProcedure;
             List<Models.UserModel> users = new List<Models.UserModel>();
 
             try
@@ -55,14 +55,16 @@ namespace FinancialSocialNetwork.DataAccess
                     user.lastName = reader["LastName"].ToString();
                     user.country = reader["Country"].ToString();
                     user.username = reader["Username"].ToString();
-
+                    user.photoURL = reader["PhotoURL"].ToString();
+                    user.bio = reader["Bio"].ToString();
+                    user.bankIDs= reader["BankIDs"].ToString();
+                    users.Add(user);
                     //users.name = reader["name"].ToString();
                 }
             }
-
-                return null;
+            
+                return users;
         }
-
 
         public Boolean login(String username, String password)
         {
@@ -73,7 +75,7 @@ namespace FinancialSocialNetwork.DataAccess
             String passwordHashed = getPasswordHash(password);
 
             SqlCommand command = new SqlCommand("SELECT UserID FROM UserLogin WHERE Username='" + username + "' AND Password='" + passwordHashed + "'", con);
-            try
+            try                                                                                                                                                                                             
             {
                 con.Open();
             }
@@ -81,10 +83,13 @@ namespace FinancialSocialNetwork.DataAccess
             {
                 Console.WriteLine("Failed to connect to DB:  " + e.ToString()); //not handling DB errors for this project just yet.
             }
-            int r = command.ExecuteNonQuery();
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+				success = true;
 
-            if (r == 1)
-                success= true;
+			}
+            
             return success;
 
         }
@@ -98,6 +103,109 @@ namespace FinancialSocialNetwork.DataAccess
 
             return hashedPassword;
         }
+
+        public Boolean updateBio(int UserID, String newBio)//Used for removing too
+        {
+
+            if (newBio.Equals("remove"))
+                newBio = "I don't have a bio yet!";
+
+            Boolean r = false;
+            connection();
+            SqlCommand command = new SqlCommand("UPDATE UserInfo SET Bio='" + newBio + "' WHERE UserID=" + UserID);
+            try
+            {
+                con.Open();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Failed to connect to DB:  " + e.ToString()); //not handling DB errors for this project just yet.
+            }
+            int rInt = command.ExecuteNonQuery();
+            if (rInt == 1)
+            {
+                r = true;
+            }
+            return r;
+        }
+
+        public Boolean updatePicture(int UserID, String photoURL)//Used for removing too
+        {
+
+            if (photoURL.Equals("remove"))
+                photoURL = "https://us.123rf.com/450wm/urfandadashov/urfandadashov1806/urfandadashov180601827/urfandadashov180601827.jpg?ver=6";
+           
+            Boolean r = false;
+            connection();
+            SqlCommand command = new SqlCommand("UPDATE UserInfo SET ProfileURL='"+photoURL+"' WHERE UserID=" + UserID);
+            try
+            {
+                con.Open();
+            } catch(Exception e)
+            {
+                Console.WriteLine("Failed to connect to DB:  " + e.ToString()); //not handling DB errors for this project just yet.
+            }
+            int rInt = command.ExecuteNonQuery();
+            if (rInt == 1)
+            {
+                r = true;
+            }
+            return r;
+        }
+
+        public Boolean updateBanks(int UserID, String newBanks)//Used for removing too
+        {
+
+            if (newBanks.Equals("remove"))
+                newBanks = "";
+            Boolean r = false;
+            connection();
+            SqlCommand command = new SqlCommand("UPDATE UserInfo SET Banks='" + newBanks + "' WHERE UserID=" + UserID);
+            try
+            {
+                con.Open();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Failed to connect to DB:  " + e.ToString()); //not handling DB errors for this project just yet.
+            }
+            int rInt = command.ExecuteNonQuery();
+            if (rInt == 1)
+            {
+                r = true;
+            }
+            return r;
+        }
+
+        public String getProfile(int UserID)
+        {
+            connection();
+            SqlCommand command = new SqlCommand("SELECT ProfileURL FROM UserInfo WHERE UserID=" + UserID, con);
+            try
+            {
+                con.Open();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Failed to connect to DB:  " + e.ToString()); //not handling DB errors for this project just yet.
+            }
+
+            String profileURL = "";
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+
+                    profileURL = reader["ProfileURL"].ToString();
+                }
+            }
+
+            
+
+            return profileURL;
+        }
+
 
         public String getBio(int UserID)
         {
