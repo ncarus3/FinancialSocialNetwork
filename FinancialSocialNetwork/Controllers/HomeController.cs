@@ -18,25 +18,30 @@ namespace FinancialSocialNetwork.Controllers
 
         }
            
-
+        private Boolean checkLogin()
+        {
+            var check = HttpContext.Session.Get("isLoggedIn");
+            Boolean b = false;
+            if (check != null)
+            {
+                b = true;
+            }
+            return b;
+        }
         
         private DataAccess.DataAccess DA = new DataAccess.DataAccess();
 
         public IActionResult Index()
         {
-            /*Boolean isLoggedIn = false;
-            Byte[] b = new Byte[1];
-            b[0] = 1;
-            HttpContext.Session.Set("d", b);*/
 
-            ViewBag.isLoggedIn = false;
+            ViewBag.isLoggedIn = checkLogin();
             return View();
         }
 
         public IActionResult CurrentCurrency()
         {
-            ViewBag.isLoggedIn = false;
-           
+            ViewBag.isLoggedIn = checkLogin();
+
             return View();
         }
 
@@ -46,34 +51,65 @@ namespace FinancialSocialNetwork.Controllers
             UM = DA.getUsers();
             ViewBag.people = UM;
 
-            ViewBag.isLoggedIn = false;
+            ViewBag.isLoggedIn = checkLogin();
             return View();
         }
         public IActionResult RegisterLogin()
         {
-            ViewBag.isLoggedIn = false;
-            return View();
+            ViewBag.isLoggedIn = checkLogin();
+            if (checkLogin())
+            {
+                return RedirectToAction("MyAccount", "Account");
+
+            }
+            else
+            {
+                return View();
+
+            }
         }
 
         public IActionResult About()
         {
-            ViewBag.isLoggedIn = false;
+            ViewBag.isLoggedIn = checkLogin();
+
+            return View();
+        }
+
+        public IActionResult Help()
+        {
+            ViewBag.isLoggedIn = checkLogin();
 
             return View();
         }
 
         public IActionResult GoPro()
         {
-            ViewBag.isLoggedIn = false;
+            ViewBag.isLoggedIn = checkLogin();
 
             return View();
         }
 
         public IActionResult Privacy()
         {
-            ViewBag.isLoggedIn = false;
+            ViewBag.isLoggedIn = checkLogin();
 
             return View();
+        }
+
+        public IActionResult Chat()
+        {
+            ViewBag.isLoggedIn = checkLogin();
+            if (checkLogin())
+            {
+                return View();
+
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

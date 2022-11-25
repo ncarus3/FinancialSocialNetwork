@@ -66,7 +66,7 @@ namespace FinancialSocialNetwork.DataAccess
                 return users;
         }
 
-        public Boolean login(String username, String password)
+        public Boolean login(String username, String password, out String? UserID)
         {
 
             Boolean success = false;
@@ -83,13 +83,21 @@ namespace FinancialSocialNetwork.DataAccess
             {
                 Console.WriteLine("Failed to connect to DB:  " + e.ToString()); //not handling DB errors for this project just yet.
             }
-            SqlDataReader reader = command.ExecuteReader();
-            if (reader.HasRows)
+            String tmp = "";
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-				success = true;
+                if (reader.HasRows)
+                {
+                    success = true;
 
-			}
-            
+                }
+                while (reader.Read()) { 
+                      tmp = reader["UserID"].ToString();
+
+                }
+            }
+
+            UserID = tmp;
             return success;
 
         }
@@ -180,7 +188,7 @@ namespace FinancialSocialNetwork.DataAccess
         public String getProfile(int UserID)
         {
             connection();
-            SqlCommand command = new SqlCommand("SELECT ProfileURL FROM UserInfo WHERE UserID=" + UserID, con);
+            SqlCommand command = new SqlCommand("SELECT PhotoURL FROM UserInfo WHERE UserID=" + UserID, con);
             try
             {
                 con.Open();
@@ -197,7 +205,7 @@ namespace FinancialSocialNetwork.DataAccess
                 while (reader.Read())
                 {
 
-                    profileURL = reader["ProfileURL"].ToString();
+                    profileURL = reader["PhotoURL"].ToString();
                 }
             }
 

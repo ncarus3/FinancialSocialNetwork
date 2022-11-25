@@ -22,14 +22,25 @@ namespace FinancialSocialNetwork.Controllers
         public JsonResult login(String username, String password)
         {
             Boolean r = false;
-
-            r = DA.login(username, password);
+            String UserID = "";
+            r = DA.login(username, password, out UserID);
             if (r)
             {
                 HttpContext.Session.SetString("isLoggedIn", "true");
+                HttpContext.Session.SetString("UserID", UserID);
+                HttpContext.Session.SetString("Bio", DA.getBio(int.Parse(UserID)));
+                HttpContext.Session.SetString("ProfilePic", DA.getProfile(int.Parse(UserID)));
+                
+                
                 
             }
             return new JsonResult(r); 
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

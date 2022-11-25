@@ -2,6 +2,10 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+
+    var bio = ViewBag.bio;
+    var profPic = ViewBag.ProfilePic;
+
 }
 
 <style>
@@ -121,11 +125,11 @@
             <div class="profContents">
                 <div class="profilePicture">
                     <h5>Profile Picture:</h5>
-                    <img src="" class="profilePicture" />
+                    <img src="@profPic" class="profilePicture" />
                 </div>
                 <div class="bio">
                     <h5>Biography:</h5>
-                    <textarea class="bio" disabled></textarea>
+                    <textarea class="bio" disabled>@bio</textarea>
                 </div>
                 <div class="banks">
                     <h5>Banks I Have: </h5>
