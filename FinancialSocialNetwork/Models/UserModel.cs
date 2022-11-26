@@ -14,5 +14,7 @@
         public String photoURL { get; set; }
         public String bio { get; set; }
         public String bankIDs{ get; set; }
+
+        public List<String> banksList { get; set; }
     }
 }

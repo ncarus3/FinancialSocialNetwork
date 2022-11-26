@@ -14,7 +14,6 @@ namespace FinancialSocialNetwork.DataAccess
     {
 
         private SqlConnection con;
-
         private void connection()
         {
             // String constr = ConfigurationManager.ConnectionStrings[""].ToString;
@@ -60,6 +59,7 @@ namespace FinancialSocialNetwork.DataAccess
                     user.photoURL = reader["PhotoURL"].ToString();
                     user.bio = reader["Bio"].ToString();
                     user.bankIDs= reader["BankIDs"].ToString();
+                    user.banksList = getUserBanks(user.userID);
                     users.Add(user);
                     //users.name = reader["name"].ToString();
                 }
@@ -68,6 +68,38 @@ namespace FinancialSocialNetwork.DataAccess
                 return users;
         }
 
+        public List<Models.BankModel> getBanks()
+        {
+            connection();
+            SqlCommand command = new SqlCommand("SELECT * FROM Banks", con);
+            List<Models.BankModel> banks = new List<Models.BankModel>();
+
+            try
+            {
+                con.Open();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Failed to connect to DB:  " + e.ToString()); //not handling DB errors for this project just yet.
+            }
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                //create a model for users
+                while (reader.Read())
+                {
+                    Models.BankModel bank = new Models.BankModel();
+
+                    bank.BankID = Int32.Parse(reader["BankID"].ToString());
+                    bank.BankName = reader["BankName"].ToString();
+                    
+                    banks.Add(bank);
+                    //users.name = reader["name"].ToString();
+                }
+            }
+
+            return banks;
+        }
 
         public Models.UserModel getUser(int UserID)
         {
@@ -278,6 +310,67 @@ namespace FinancialSocialNetwork.DataAccess
             return profileURL;
         }
 
+        public List<String> getUserBanks(int UserID)
+        {
+
+            String list = "";
+            List<String> bList = new List<string>();
+            connection();
+            SqlCommand command = new SqlCommand("SELECT BankIDs FROM UserInfo WHERE UserID=" + UserID, con);
+            try
+            {
+                con.Open();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Failed to connect to DB:  " + e.ToString()); //not handling DB errors for this project just yet.
+            }
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+
+                    list = reader["BankIDs"].ToString();
+
+                }
+            }
+            if (list != null)
+            {
+                char[] tempList = list.ToArray();
+                for (int i = 0; i < tempList.Length; i++)
+                {
+                    if (tempList[i].Equals(',')){
+                        continue;
+                    } else
+                    {
+                         command = new SqlCommand("SELECT BankName FROM Banks WHERE BankID=" + tempList[i], con);
+                        
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+
+                                bList.Add(reader["BankName"].ToString());
+
+                            }
+                        }
+                    }
+                }
+
+                return bList;
+
+
+
+            }
+            else
+            {
+                return null;
+            }
+
+
+
+
+        }
 
         public String getBio(int UserID)
         {
@@ -306,6 +399,40 @@ namespace FinancialSocialNetwork.DataAccess
             }
 
             return bio;
+        }
+
+        public Boolean addBank(int UserID, int BankID)
+        {
+            Boolean r = false;
+
+            String oldList = "";
+            connection();
+            SqlCommand command = new SqlCommand("SELECT BankIDs FROM UserInfo WHERE UserID=" + UserID, con);
+            try
+            {
+                con.Open();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Failed to connect to DB:  " + e.ToString()); //not handling DB errors for this project just yet.
+            }
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+
+                    oldList = reader["BankIDs"].ToString();
+                }
+            }
+            String newList = oldList + "," + BankID;
+
+            command = new SqlCommand("UPDATE UserInfo SET BankIDs='"+newList+"' WHERE UserID="+UserID, con);
+
+            int rInt = command.ExecuteNonQuery();
+
+            if (rInt == 1)
+                r = true;
+                    return r;
         }
     }
 }

@@ -55,8 +55,15 @@
                 </div>
                 <div class="section">
                     <p>Banks that @user.firstName Uses:</p>
-                    <p>@user.bankIDs</p>
-                    
+                    @{
+                        foreach (var b in user.banksList)
+                        {
+                            <p>@b</p>
+                        }
+
+                       
+
+                    }
                 </div>
                 <div class="section">
                     <a href="/User/user?ID=@user.userID" class="buttonStyle">Match with @user.firstName</a>

@@ -5,119 +5,126 @@
 
     var bio = ViewBag.bio;
     var profPic = ViewBag.ProfilePic;
-
+    var bankList = ViewBag.BankList;
+    var theBankList = ViewBag.theBankList;
 }
 
 <style>
 
     #sides{
-        display:flex;
-        flex-direction:row;
+    display:flex;
+    flex-direction:row;
     }
     .side{
-        outline: 1px solid;
-        display:flex;
-        flex-direction:column;
-        padding:1em;
-        width:50%;
-        align-items:center;
-        margin-bottom:5em;
+    outline: 1px solid;
+    display:flex;
+    flex-direction:column;
+    padding:1em;
+    width:50%;
+    align-items:center;
+    margin-bottom:5em;
     }
     div.profilePicture{
-        display:flex;
-        margin:1em;
-        flex-direction:row;
+    display:flex;
+    margin:1em;
+    flex-direction:row;
     }
     div.bio{
-        display:flex;
-        flex-direction:row;
-        margin:1em;
-        justify-content: flex-end;
+    display:flex;
+    flex-direction:row;
+    margin:1em;
+    justify-content: flex-end;
     }
     div.banks{
-        display:flex;
-        flex-direction:row;
-        margin:1em;
-        justify-content: flex-end;
+    display:flex;
+    flex-direction:row;
+    margin:1em;
+    justify-content: flex-end;
     }
     img.profilePicture{
-        width:200px;
-        height:200px;
-        margin-left:1em;
+    width:200px;
+    height:200px;
+    margin-left:1em;
     }
     select.banks{
-        margin-left:1em;
+    margin-left:1em;
     }
     textarea.bio{
-        height:200px;
-        padding:12px 20px;
-        box-sizing:border-box;
-        border:2px solid #ccc;
-        border-radius: 4px;
-        background-color: #f8f8f8;
-        font-size:13px;
-        margin-left: 1em;
-        z-index:2;
-        
+    height:200px;
+    padding:12px 20px;
+    box-sizing:border-box;
+    border:2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size:13px;
+    margin-left: 1em;
+    z-index:2;
+
     }
 
     div#overlay{
-        background-color:black;
-        opacity:80%;
-        z-index:100;
-        height:100%;
-        width:100%;
-        position:absolute;
-        top:0;
-        left:0;
-        display:none;
+    background-color:black;
+    opacity:80%;
+    z-index:100;
+    height:100%;
+    width:100%;
+    position:absolute;
+    top:0;
+    left:0;
+    display:none;
     }
 
     div#editPicture{
-        width:400px;
-        height:300px;
-        border:white;
-        border-style: double;
-        display:none;
-        margin: 0 auto;
-        position:relative;
-        background-color:lightskyblue;
-        z-index:101;
+    width:400px;
+    height:300px;
+    border:white;
+    border-style: double;
+    display:none;
+    margin: 0 auto;
+    position:relative;
+    background-color:lightskyblue;
+    z-index:101;
     }
     div#editBio{
-        width: 400px;
-        height: 300px;
-        border: white;
-        border-style: double;
-        display: none;
-        margin: 0 auto;
-        position: relative;
-        background-color: lightskyblue;
-        z-index: 101;
+    width: 400px;
+    height: 300px;
+    border: white;
+    border-style: double;
+    display: none;
+    margin: 0 auto;
+    position: relative;
+    background-color: lightskyblue;
+    z-index: 101;
     }
     div#editBanks{
-        width: 400px;
-        height: 300px;
-        border: white;
-        border-style: double;
-        display: none;
-        margin: 0 auto;
-        position: relative;
-        background-color: lightskyblue;
-        z-index: 101;
+    width: 400px;
+    height: 800px;
+    border: white;
+    border-style: double;
+    display: none;
+    margin: 0 auto;
+    position: relative;
+    background-color: lightskyblue;
+    z-index: 101;
     }
     div#pictureDiv{
-       display:flex;
-       flex-direction: column;
-       align-items:center;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
     }
 
     div#bioDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+
+    div#bankssDiv {
         display: flex;
         flex-direction: column;
         align-items: center;
     }
-    
+
 </style>
 
 <div id="containerDiv">
@@ -141,9 +148,17 @@
                     <h5>Banks I Have: </h5>
                     <br />
                     <select class="banks">
-                        <option>Td Bank</option>
-                        <option>Chase Bank</option>
-                        <option>RobinHood</option>
+                        @{
+
+                            
+                                foreach (var bank in bankList)
+                                {
+                                <option>@bank</option>
+                            }
+
+                             
+                        }
+                        
                     </select>
                 </div>
             </div>
@@ -167,20 +182,48 @@
     </div>
     <div id="editBio">
         <div id="bioDiv">
-        <textarea id="bioText"></textarea>
+        <textarea id="bioText">@bio</textarea>
         <a class="buttonStyle" id="updateBio">Update</a>
         <a class="buttonStyle" id="removeBio">Remove Bio</a>
         <a class="buttonStyle" id="cancelBio">Cancel</a>
         </div>
     </div>
-    <div id="editBanks">
+        <div id="editBanks">
+            <div id="bankssDiv">
+            Banks:
+            @{
+                foreach(var bank in theBankList)
+                {
+                    <a class="buttonStyle" id="addBankB" onclick="addBank(@bank.BankID)">Add @bank.BankName</a>
+                }
+            }
+            <a class="buttonStyle" id="cancelAddBank">Cancel</a>
+                
+        </div>
+    </div>
+
     </div>
 </div>
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 
 <script >
+
+    function addBank(bankID) {
+        $.post("/Account/addBank", { BankID: bankID }, function (data) {
+            if (data == true) {
+                alert("Bank added successfully");
+                location.reload();
+
+            } else {
+                alert("There was an error adding that bank to your account.");
+            }
+        });
+    }
+
     $(document).ready(function(){
+
+       
         $("a#editPicture").click(function(){
             $("div#editPicture").show();
             $("div#overlay").show();
@@ -203,8 +246,15 @@
 
 
         });
+        $("a#cancelAddBank").click(function () {
+            $("div#editBanks").hide();
+            $("div#overlay").hide();
+
+
+        });
         $("a#editBanks").click(function () {
-            alert("banks");
+            $("div#editBanks").show();
+            $("div#overlay").show();
         });
 
 

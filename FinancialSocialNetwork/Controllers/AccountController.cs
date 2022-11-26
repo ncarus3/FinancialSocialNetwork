@@ -24,6 +24,15 @@ namespace FinancialSocialNetwork.Controllers
 
             return new JsonResult(r);
         }
+
+        public JsonResult addBank(int BankID)
+        {
+            Boolean r = false;
+
+            r = DA.addBank(int.Parse(HttpContext.Session.GetString("UserID")), BankID);
+
+            return new JsonResult(r);
+        }
         public IActionResult MyAccount()
         {
             var check = HttpContext.Session.Get("isLoggedIn");
@@ -39,6 +48,8 @@ namespace FinancialSocialNetwork.Controllers
 
                 ViewBag.bio = DA.getBio(int.Parse(HttpContext.Session.GetString("UserID")));
                 ViewBag.profilePic = DA.getProfile(int.Parse(HttpContext.Session.GetString("UserID")));
+                ViewBag.BankList = DA.getUserBanks(int.Parse(HttpContext.Session.GetString("UserID")));
+                ViewBag.theBankList = DA.getBanks();
                 return View();
 
             } else
