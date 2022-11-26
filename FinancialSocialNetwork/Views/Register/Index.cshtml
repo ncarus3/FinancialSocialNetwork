@@ -4,50 +4,114 @@
 @{
 }
 
+<style>
+	.error {
+		color: red;
+		display: none;
+		position: absolute;
+	}
+
+</style>
+
 <div class="container">
-	<form action="" class="m-auto" style="max-width:600px">
-		<h3 class="my-4">Register Form</h3>
-		<hr class="my-4" />
-		<div class="form-group mb-3 row">
-			<label for="first-name2" class="col-md-5 col-form-label">First Name</label>
-			<div class="col-md-7"><input type="text" class="form-control form-control-lg" id="first-name2" name="first-name" required></div>
-		</div>
-		<div class="form-group mb-3 row">
-			<label for="last-name3" class="col-md-5 col-form-label">Last Name</label>
-			<div class="col-md-7"><input type="text" class="form-control form-control-lg" id="last-name3" name="last-name" required></div>
-		</div>
-		<div class="form-group mb-3 row">
-			<label for="your-email4" class="col-md-5 col-form-label">Your Email</label>
-			<div class="col-md-7"><input type="email" class="form-control form-control-lg" id="your-email4" name="your-email" required><small class="form-text text-muted"> Please enter a valid email address</small></div>
-		</div>
-		<div class="form-group mb-3 row">
-			<label for="username6" class="col-md-5 col-form-label">Username</label>
-			<div class="col-md-7"><input type="text" class="form-control form-control-lg" id="username6" name="username" required></div>
-		</div>
-		<div class="form-group mb-3 row">
-			<label for="phone-number7" class="col-md-5 col-form-label">Phone number</label>
-			<div class="col-md-7"><input type="text" class="form-control form-control-lg" id="phone-number7" name="phone-number" required></div>
-		</div>
-		<div class="form-group mb-3 row">
-			<label for="password8" class="col-md-5 col-form-label">Password</label>
-			<div class="col-md-7"><input type="text" class="form-control form-control-lg" id="password8" name="password" required></div>
-		</div>
-		<div class="form-group mb-3 row">
-			<label for="repeat-password9" class="col-md-5 col-form-label">Repeat Password</label>
-			<div class="col-md-7"><input type="text" class="form-control form-control-lg" id="repeat-password9" name="repeat-password" required></div>
-		</div>
-		<div class="form-group mb-3 row">
-			<label for="select-option10" class="col-md-5 col-form-label">Select Option</label>
-			<div class="col-md-7">
-				<select class="form-select custom-select custom-select-lg" id="select-option10">
-					<option>Country</option>
-				</select>
-			</div>
-		</div>
-		<hr class="my-4" />
-		<div class="form-group mb-3 row">
-			<label for="sign-up12" class="col-md-5 col-form-label"></label>
-			<div class="col-md-7"><button class="btn btn-primary btn-lg" type="submit">Sign up</button></div>
-		</div>
-	</form>
+	<h3 class="my-4">Registration Form</h3>
+	<h5 class="error" id="error"> Please fill in all input fields.</h5>
+	<hr class="my-4" />
+	<div class="form-group mb-3 row">
+		<label for="username" class="col-md-5 col-form-label">Username</label>
+		<div class="col-md-7"><input type="text" class="form-control form-control-lg" id="username" name="username" required></div>
+	</div>
+	<div class="form-group mb-3 row">
+		<label for="password" class="col-md-5 col-form-label">Password</label>
+		<div class="col-md-7"><input type="password" class="form-control form-control-lg" id="password" name="password" required></div>
+	</div>
+	<div class="form-group mb-3 row">
+		<label for="rPassword" class="col-md-5 col-form-label">Repeat Password</label>
+		<div class="col-md-7"><input type="password" class="form-control form-control-lg" id="rPassword" name="rPassword" required></div>
+	</div>
+
+	<div class="form-group mb-3 row">
+		<label for="email" class="col-md-5 col-form-label">Email</label>
+		<div class="col-md-7"><input type="text" class="form-control form-control-lg" id="email" name="email" required></div>
+	</div>
+
+	<div class="form-group mb-3 row">
+		<label for="fName" class="col-md-5 col-form-label">First Name</label>
+		<div class="col-md-7"><input type="text" class="form-control form-control-lg" id="fName" name="fName" required></div>
+	</div>
+
+	<div class="form-group mb-3 row">
+		<label for="lName" class="col-md-5 col-form-label">Last Name</label>
+		<div class="col-md-7"><input type="text" class="form-control form-control-lg" id="lName" name="lName" required></div>
+	</div>
+
+	<div class="form-group mb-3 row">
+		<label for="phone" class="col-md-5 col-form-label">Phone Number</label>
+		<div class="col-md-7"><input type="tel" class="form-control form-control-lg" id="phone" name="phone" required></div>
+	</div>
+
+	<div class="form-group mb-3 row">
+		<label for="country" class="col-md-5 col-form-label">Country</label>
+		<div class="col-md-7"><input type="text" class="form-control form-control-lg" id="country" name="country" required></div>
+	</div>
+	
+
+
+	<hr class="my-4" />
+
+	<div class="form-group mb-3 row">
+		<label for="login-up6" class="col-md-5 col-form-label"></label>
+		<div class="col-md-7"><button class="btn btn-primary btn-lg" id="loginB">Login</button></div>
+	</div>
 </div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+
+	<script>
+
+		
+
+
+		$("button#loginB").click(function(){
+
+			let fName = $("input#fName").val();
+			let lName = $("input#lName").val();
+			let country = $("input#country").val();
+			let phone = $("input#phone").val();
+			let email = $("input#email").val();
+			let password = $("input#password").val();
+			let rPassword = $("input#rPassword").val();
+			let username = $("input#username").val();
+
+
+			if (fName == "" || username == "" || lName == "" || phone == "" || country == "" || rPassword == "" || password == "" || email == ""){
+				$("h5.error").text("Please be sure to fill in every field.");
+				$("h5.error").slideDown();
+			} else {
+				$("h5.error").slideUp();
+				if (password != rPassword){
+					$("h5.error").text("Please make sure passwords match");
+					$("h5.error").slideDown();
+				} else {
+
+					$("h5.error").slideUp();
+					$.post("/Register/register", {fName: fName, lName: lName, username:username, email:email, password:password, phoneNumber:phone, country:country}, function (data) {
+						if (data != true){
+							
+							$("h5.error").text("An unknown error occured, or the username is taken, please try again.");
+							$("h5.error").slideDown();
+						} else {
+							$("h5.error").slideUp();
+							window.location.href = "/Login/Index";
+						}
+					});
+
+				}
+			}
+			
+		});
+
+
+
+	</script>

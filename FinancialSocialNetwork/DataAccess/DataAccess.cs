@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics.Metrics;
 using System.Net;
+using FinancialSocialNetwork.Models;
 using Microsoft.AspNetCore.Http;
 
 
@@ -66,6 +68,68 @@ namespace FinancialSocialNetwork.DataAccess
                 return users;
         }
 
+
+        public Models.UserModel getUser(int UserID)
+        {
+
+            Models.UserModel user = new Models.UserModel();
+            List<UserModel> UM = new List<UserModel>();
+            UM = getUsers();
+
+            foreach(Models.UserModel u in UM)
+            {
+                if (u.userID == UserID)
+                {
+                    user = u;
+                    break;
+                } else
+                {
+                    
+                }
+            }
+
+            return user;
+        }
+
+        public Boolean register(String fName, String lName, String username, String email, String password, String phoneNumber, String Country)
+        {
+            Boolean r = false;
+
+			connection();
+			SqlCommand command = new SqlCommand("dbo.RegisterAccount", con);
+			command.CommandType = CommandType.StoredProcedure;
+
+			String passwordHashed = getPasswordHash(password);
+
+
+			command.Parameters.AddWithValue("username", username);
+            command.Parameters.AddWithValue("firstName", fName);
+            command.Parameters.AddWithValue("lastName", lName);
+            command.Parameters.AddWithValue("email", email);
+            command.Parameters.AddWithValue("password", passwordHashed);
+            command.Parameters.AddWithValue("country", Country);
+            command.Parameters.AddWithValue("phone", phoneNumber);
+			try
+			{
+				con.Open();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("Failed to connect to DB:  " + e.ToString()); //not handling DB errors for this project just yet.
+			}
+
+            int rInt = command.ExecuteNonQuery();
+
+            if (rInt == 3)
+            {
+                r = true;
+            }
+
+            
+			return r;
+
+        }
+
         public Boolean login(String username, String password, out String? UserID)
         {
 
@@ -116,11 +180,11 @@ namespace FinancialSocialNetwork.DataAccess
         {
 
             if (newBio.Equals("remove"))
-                newBio = "I don't have a bio yet!";
+                newBio = "I dont have a bio yet!";
 
             Boolean r = false;
             connection();
-            SqlCommand command = new SqlCommand("UPDATE UserInfo SET Bio='" + newBio + "' WHERE UserID=" + UserID);
+            SqlCommand command = new SqlCommand("UPDATE UserInfo SET Bio='" + newBio + "' WHERE UserID=" + UserID, con);
             try
             {
                 con.Open();
@@ -141,11 +205,11 @@ namespace FinancialSocialNetwork.DataAccess
         {
 
             if (photoURL.Equals("remove"))
-                photoURL = "https://us.123rf.com/450wm/urfandadashov/urfandadashov1806/urfandadashov180601827/urfandadashov180601827.jpg?ver=6";
+                photoURL = "https://thumbs.dreamstime.com/b/no-user-profile-picture-hand-drawn-illustration-53840792.jpg";
            
             Boolean r = false;
             connection();
-            SqlCommand command = new SqlCommand("UPDATE UserInfo SET ProfileURL='"+photoURL+"' WHERE UserID=" + UserID);
+            SqlCommand command = new SqlCommand("UPDATE UserInfo SET PhotoURL='"+photoURL+"' WHERE UserID=" + UserID, con);
             try
             {
                 con.Open();

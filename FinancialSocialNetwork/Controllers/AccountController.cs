@@ -7,6 +7,23 @@ namespace FinancialSocialNetwork.Controllers
 
         DataAccess.DataAccess DA = new DataAccess.DataAccess();
 
+        public JsonResult updatePicture(String newPicture)
+        {
+            Boolean r = false;
+
+             r = DA.updatePicture(int.Parse(HttpContext.Session.GetString("UserID")), newPicture);
+
+            return new JsonResult(r);
+        }
+
+        public JsonResult updateBio(String newBio)
+        {
+            Boolean r = false;
+
+            r = DA.updateBio(int.Parse(HttpContext.Session.GetString("UserID")), newBio);
+
+            return new JsonResult(r);
+        }
         public IActionResult MyAccount()
         {
             var check = HttpContext.Session.Get("isLoggedIn");
@@ -20,8 +37,8 @@ namespace FinancialSocialNetwork.Controllers
             if (b)
             {
 
-                ViewBag.bio = HttpContext.Session.GetString("Bio");
-                ViewBag.profilePic = HttpContext.Session.GetString("ProfilePic");
+                ViewBag.bio = DA.getBio(int.Parse(HttpContext.Session.GetString("UserID")));
+                ViewBag.profilePic = DA.getProfile(int.Parse(HttpContext.Session.GetString("UserID")));
                 return View();
 
             } else

@@ -4,7 +4,9 @@ namespace FinancialSocialNetwork.Controllers
 {
     public class UserController : Controller
     {
-        public IActionResult User()
+
+        DataAccess.DataAccess DA = new DataAccess.DataAccess(); 
+        public IActionResult User(int ID)
         {
             var check = HttpContext.Session.Get("isLoggedIn");
             Boolean b = false;
@@ -12,7 +14,7 @@ namespace FinancialSocialNetwork.Controllers
             {
                 b = true;
             }
-
+            ViewBag.user = DA.getUser(ID);
             ViewBag.isLoggedIn = b;
             return View();
         }

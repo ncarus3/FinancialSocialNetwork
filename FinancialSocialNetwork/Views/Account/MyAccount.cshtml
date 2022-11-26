@@ -111,6 +111,12 @@
        flex-direction: column;
        align-items:center;
     }
+
+    div#bioDiv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
     
 </style>
 
@@ -160,9 +166,12 @@
         
     </div>
     <div id="editBio">
+        <div id="bioDiv">
         <textarea id="bioText"></textarea>
         <a class="buttonStyle" id="updateBio">Update</a>
+        <a class="buttonStyle" id="removeBio">Remove Bio</a>
         <a class="buttonStyle" id="cancelBio">Cancel</a>
+        </div>
     </div>
     <div id="editBanks">
     </div>
@@ -196,6 +205,55 @@
         });
         $("a#editBanks").click(function () {
             alert("banks");
+        });
+
+
+        $("a#removePicture").click(function(){
+            $.post("/Account/updatePicture", { newPicture: "remove" }, function (data) {
+                if (data == true){
+                    alert("Picture successfully removed.");
+                    location.reload();
+                } else {
+                    alert("There was an error removing the picture");
+                }
+            });
+        });
+
+        $("a#changePicture").click(function () {
+
+            let newPic = window.prompt("New profile picture URL", "URL HERE");
+            $.post("/Account/updatePicture", { newPicture: newPic }, function (data) {
+                if (data == true) {
+                    alert("Picture successfully changed.");
+                    location.reload();
+                } else {
+                    alert("There was an error removing the picture");
+                }
+            });
+        });
+
+        $("a#removeBio").click(function () {
+            
+            $.post("/Account/updateBio", { newBio: "remove" }, function (data) {
+                if (data == true) {
+                    alert("Bio successfully removed.");
+                    location.reload();
+                } else {
+                    alert("There was an error removing the bio");
+                }
+            });
+        });
+
+        $("a#updateBio").click(function () {
+            let newBio = $("textarea#bioText").val();
+            $.post("/Account/updateBio", { newBio: newBio }, function (data) {
+                if (data == true) {
+                    alert("Bio successfully changed.");
+                    location.reload();
+                } else {
+                    alert("There was an error removing the bio");
+                }
+            });
         });
     });
 </script>
