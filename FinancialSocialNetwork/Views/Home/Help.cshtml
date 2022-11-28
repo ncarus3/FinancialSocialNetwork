@@ -3,3 +3,65 @@
 *@
 @{
 }
+ <h1>Help:</h1>
+
+
+<div class="accordion w-100" id="basicAccordion">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
+                    data-mdb-target="#basicAccordionCollapseOne" aria-expanded="true" aria-controls="collapseOne">
+                But didn't you say free?
+            </button>
+        </h2>
+        <div id="basicAccordionCollapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+             data-mdb-parent="#basicAccordion" style="">
+            <div class="accordion-body">
+                Absolutely! Consider Facebook and LinkedIn, both are social networks where the user may opt to purchase service upgrades, they consider worth it. This is no different. If you'd rather not, you still have the ability to find a match and exchange with anyone around the world with whom you share the same country banks!
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
+                    data-mdb-target="#basicAccordionCollapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                What does the premium subscription offer?
+            </button>
+        </h2>
+        <div id="basicAccordionCollapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+             data-mdb-parent="#basicAccordion" style="">
+            <div class="accordion-body">
+When you 'GoPro!', you neither need to find a match with someone who shares the same banks as you, nor need to find someone interested in sending the same sum of money as you, our service has you covered and assured!
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
+                    data-mdb-target="#basicAccordionCollapseThree" aria-expanded="false" aria-controls="collapseThree">
+                What if I do not trust my pair?
+
+            </button>
+        </h2>
+        <div id="basicAccordionCollapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+             data-mdb-parent="#basicAccordion" style="">
+            <div class="accordion-body">
+Not a problem! Our platform offers the option to mediate the exchange. We hang onto the deposit of both parties, once both have deposited, we will finalize the exchange after one last confirmation1.
+
+This service takes 3-days to fulfil, following the final confirmation of both parties1.            </div>
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+        <script>
+    $("#headingOne").click(function () {
+        $("#basicAccordionCollapseOne").slideDown();
+    });
+     $("#headingTwo").click(function () {
+        $("#basicAccordionCollapseTwo").slideDown();
+    });
+     $("#headingThree").click(function () {
+        $("#basicAccordionCollapseThree").slideDown();
+    });
+        </script>

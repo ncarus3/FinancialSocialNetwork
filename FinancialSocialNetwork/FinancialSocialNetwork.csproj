@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Views\Home\Content\Dean.jpg" />
+    <Content Include="Views\Home\Content\jared.jpg" />
+    <Content Include="Views\Home\Content\mariama.jpg" />
+    <Content Include="Views\Home\Content\Testimonial.mov" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
